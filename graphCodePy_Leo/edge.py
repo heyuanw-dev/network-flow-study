@@ -3,6 +3,11 @@
 class Vertex:
     def __init__(self, name):
         self.name = name
+        self.incident_edges = []
+
+    def __str__(self) -> str:
+        return str(self.name)
+
 
 class Edge:
     def __init__(self, v1, v2, capacity, name=None):

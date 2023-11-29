@@ -1,23 +1,5 @@
 import os
 
-class Vertex:
-    def __init__(self, name):
-        self.name = name
-
-class SimpleGraph:
-    def __init__(self):
-        self.vertices = {}
-        self.edges = []
-
-    def insert_vertex(self, name):
-        vertex = Vertex(name)
-        self.vertices[name] = vertex
-        return vertex
-
-    def insert_edge(self, v1, v2, weight, name=None):
-        edge = (v1, v2, weight, name)
-        self.edges.append(edge)
-
 class GraphInput:
     @staticmethod
     def load_simple_graph(newgraph, pathandfilename):
@@ -41,7 +23,6 @@ class GraphInput:
                     v2 = table.get(v2name) or newgraph.insert_vertex(v2name)
                     table[v1name] = v1
                     table[v2name] = v2
-
                     newgraph.insert_edge(v1, v2, edge_weight)
                 else:
                     print(f"Error: Invalid number of tokens found on line {line_count}!")
