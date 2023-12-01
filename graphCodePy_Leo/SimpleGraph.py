@@ -19,6 +19,8 @@ class SimpleGraph:
         for edge in self.edges:
             if edge.v1 == v1 and edge.v2 == v2:
                 return edge
+            elif edge.v1 == v2 and edge.v2 == v1:
+                return edge
         return None
 
     def get_adjacent_edges(self, vertex: Vertex):

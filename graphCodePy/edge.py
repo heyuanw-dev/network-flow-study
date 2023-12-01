@@ -1,34 +1,21 @@
-class Vertex:
-    # Assuming a basic Vertex class implementation
-    pass
+from vertex import Vertex
 
 class Edge:
-    def __init__(self, v1, v2, data=None, name=None):
+    def __init__(self, v1: Vertex, v2: Vertex, data: int, name=None):
         self.v1 = v1
         self.v2 = v2
-        self.data = data
+        self.capacity = data
+        self.flow = 0
         self.name = name
 
-    @property
-    def first_endpoint(self):
-        return self.v1
+    def augment_flow(self, flow_value):
+        self.flow += flow_value
 
-    @property
-    def second_endpoint(self):
-        return self.v2
-
-    @property
-    def data(self):
-        return self._data
-
-    @data.setter
-    def data(self, value):
-        self._data = value
-
-    @property
-    def name(self):
-        return self._name
-
-    @name.setter
-    def name(self, value):
-        self._name = value
+    def __str__(self):
+        """
+        Return a string representation of the edge.
+        """
+        if self.flow is not None:
+            return f"({self.v1} -> {self.v2}, flow={self.flow})"
+        else:
+            return f"({self.v1} -> {self.v2})"

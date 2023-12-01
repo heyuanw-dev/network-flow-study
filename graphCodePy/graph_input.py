@@ -1,26 +1,9 @@
 import os
-
-class Vertex:
-    def __init__(self, name):
-        self.name = name
-
-class SimpleGraph:
-    def __init__(self):
-        self.vertices = {}
-        self.edges = []
-
-    def insert_vertex(self, name):
-        vertex = Vertex(name)
-        self.vertices[name] = vertex
-        return vertex
-
-    def insert_edge(self, v1, v2, weight, name=None):
-        edge = (v1, v2, weight, name)
-        self.edges.append(edge)
+from simple_graph import SimpleGraph
 
 class GraphInput:
     @staticmethod
-    def load_simple_graph(newgraph, pathandfilename):
+    def load_simple_graph(newgraph: SimpleGraph, pathandfilename: str):
         if not os.path.exists(pathandfilename):
             print(f"File {pathandfilename} not found")
             return None
