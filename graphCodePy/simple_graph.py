@@ -7,6 +7,7 @@ class SimpleGraph:
         self.edge_list = []
         self.source = None
         self.sink = None
+        self.max_capacity = 0
 
     def incident_edges(self, v: Vertex):
         return v.incident_edge_list
@@ -31,6 +32,7 @@ class SimpleGraph:
         self.edge_list.append(e)
         v1.out_edge_list.append(e)
         v2.in_edge_list.append(e)
+        self.max_capacity = max(self.max_capacity, data)
         return e
 
     def opposite(self, v: Vertex, e: Edge):
