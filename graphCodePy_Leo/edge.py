@@ -18,8 +18,8 @@ class Edge:
         self.name = name
 
     @property
-    def residual_capacity(self):
+    def residualCapacity(self):
         return self.capacity - self.flow
 
-    def augment_flow(self, additional_flow):
-        self.flow += additional_flow
+    def augmentFlow(self, additionalFlow):
+        self.flow += additionalFlow
