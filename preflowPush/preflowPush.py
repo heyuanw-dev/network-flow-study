@@ -3,12 +3,15 @@ import os
 
 # Implementation of the preflow-push algorithm for the maximum flow problem
 # Vertex class inherited from given Vertex with height and excess attributes
+# height: height of the vertex
+# excess: excess of the vertex
+# adjacent_vertices: list of adjacent vertices
 class HeightVertex(Vertex):
     def __init__(self, name: str, height: int =0, excess: float =0, data=None):
         super().__init__(data, name)
         self.height = height
         self.excess = excess
-        self.adjecent_vertices: list[str] = []
+        self.adjacent_vertices: list[str] = []
     def is_source(self):
         return self.name == "s"
     def is_sink(self):
@@ -21,17 +24,22 @@ class PreflowPushEdge(Edge):
         self.flow = flow
         self.capacity = capacity
 
-
+# Graph class for preflow-push algorithm, that contains vertices and edges
+# Vertices are stored in a dictionary with name as key and HeightVertex as value
+# Edges are stored in a dictionary with tuple of (v1, v2) as key and PreflowPushEdge as value
+# source and sink are stored as HeightVertex
 class PreflowPushGraph():
 
     def __init__(self):
-        self.source: HeightVertex = None
-        self.sink: HeightVertex = None
+        self.source: HeightVertex = None # source of the graph
+        self.sink: HeightVertex = None # sink of the graph
         self.vertices: dict[str, HeightVertex] = {} # set of vertices
         self.edges: dict[tuple, PreflowPushEdge] = dict() # dictionary of edges
     
     # Graph construction
     # Construct a HeightVertex class with a name of the node and added to the vertices dictionary
+    # name: name of the vetex
+    # Return created vertex
     def insert_vertex(self, name):
         vertex = HeightVertex(name)
         if name == "s":
@@ -47,11 +55,11 @@ class PreflowPushGraph():
     # v2: ending node
     # capacity: capacity of the edge
     # flow: flow of the edge
-    #
+    # Return created edge
     def insert_edge(self, v1, v2, capacity, flow=0):
         edge = PreflowPushEdge(v1, v2, capacity, flow)
         self.edges[(v1, v2)] = edge
-        self.vertices[v1].adjecent_vertices.append(v2)
+        self.vertices[v1].adjacent_vertices.append(v2)
         return edge
     # Get number of vertices and edges
     def num_vertices(self):
@@ -88,7 +96,7 @@ class PreflowPushGraph():
         print(f"Successfully loaded {line_count} lines.")
         return table
         
-    # Algorithm implementation
+    ######## Algorithm implementation ########
 
     def push(self, v: HeightVertex, w: HeightVertex):
         # Push flow from node v to node w
@@ -154,7 +162,7 @@ class PreflowPushGraph():
             vert: HeightVertex = activeNodes[0]
             found_push = False
             # check adjacent nodes of the selected node, if there is a node with positive excess and height less than the selected node, push flow to that node
-            for v_name in vert.adjecent_vertices:
+            for v_name in vert.adjacent_vertices:
                 v = self.vertices.get(v_name)
                 if vert.excess > 0 and (vert.height > v.height ) and self.edges[(vert.name, v.name)].capacity > self.edges[(vert.name, v.name)].flow :
                     self.push(vert, v) # apply push
@@ -167,7 +175,7 @@ class PreflowPushGraph():
             # update nodes with positive excess
             activeNodes = self.getActiveNodes() 
         # Calculate the maximum flow by summation of all flows left from source
-        max_flow = sum([self.edges[(self.source.name, v)].flow for v in self.source.adjecent_vertices])
+        max_flow = sum([self.edges[(self.source.name, v)].flow for v in self.source.adjacent_vertices])
         return max_flow
     
 
