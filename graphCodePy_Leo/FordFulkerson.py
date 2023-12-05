@@ -1,60 +1,113 @@
-# Ford-Fulkerson implementation
+# Import necessary modules
 from SimpleGraph import SimpleGraph
 from GraphInput import GraphInput
 import argparse
+import time
+from memory_profiler import profile
 
-def find_augmenting_path(graph, source, sink, path=[], visited=None):
+def findAugmentingPath(graph, source, sink, path=[], visited=None):
+    """
+    Find an augmenting path in the graph from source to sink.
+    """
+    # Initialize visited set if not provided
     if visited is None:
         visited = set()
 
+    # Return the path if source and sink are the same
     if source == sink:
         return path
 
+    # Mark the source as visited
     visited.add(source)
 
-    for edge in graph.get_adjacent_edges(source):
-        residual = edge.residual_capacity
+    # Explore adjacent edges
+    for edge in graph.getAdjacentEdges(source):
+        # Check for residual capacity
+        residual = edge.residualCapacity
         if residual > 0 and edge not in path and edge.v2 not in visited:
-            result = find_augmenting_path(graph, edge.v2, sink, path + [edge], visited)
+            # Recursively find path from the next vertex
+            result = findAugmentingPath(graph, edge.v2, sink, path + [edge], visited)
             if result is not None:
                 return result
 
+    # No augmenting path found
     return None
 
-def ford_fulkerson(graph, source, sink):
-    max_flow = 0
-    source_vertex = graph.vertices[source]
-    sink_vertex = graph.vertices[sink]
+@profile
+def fordFulkerson(graph, source, sink):
+    """
+    Implement the Ford-Fulkerson algorithm to find the maximum flow.
+    """
+    maxFlow = 0
+    sourceVertex = graph.vertices[source]
+    sinkVertex = graph.vertices[sink]
 
     while True:
-        path = find_augmenting_path(graph, source_vertex, sink_vertex)
+        # Find an augmenting path
+        path = findAugmentingPath(graph, sourceVertex, sinkVertex)
         if not path:
             break
 
-        path_flow = min(edge.residual_capacity for edge in path)
+        # Find the minimum residual capacity along the path
+        pathFlow = min(edge.residualCapacity for edge in path)
         for edge in path:
-            edge.augment_flow(path_flow)
+            # Augment the flow
+            edge.augmentFlow(pathFlow)
 
-        max_flow += path_flow
+        # Add to the total max flow
+        maxFlow += pathFlow
 
-    return max_flow
+    return maxFlow
 
+def parseGraph(graph, filePath):
+    """
+    General function to parse graph from a given file.
+    """
+    with open(filePath, 'r') as file:
+        for line in file:
+            fromVertex, toVertex, capacity = line.split()
+            # Insert vertices and edge into the graph
+            v1 = graph.insertVertex(fromVertex)
+            v2 = graph.insertVertex(toVertex)
+            graph.insertEdge(v1, v2, int(capacity))
+
+def calculateGraphDensity(graph):
+    """
+    Calculate and print the density of the graph.
+    """
+    numVertices = graph.numVertices()
+    numEdges = len(graph.edges)
+    density = numEdges / (numVertices * (numVertices - 1)) if numVertices > 1 else 0
+    print(f"Density of the Graph: {density:.4f}")
 
 def main():
-    parser = argparse.ArgumentParser(description="Ford-Fulkerson algorithm for maximum flow calculation.")
-    parser.add_argument("file_path", help="Path to the graph input file.")
-    parser.add_argument("source", help="The source vertex in the graph.")
-    parser.add_argument("sink", help="The sink vertex in the graph.")
+    """
+    Main function to execute the program.
+    """
+    parser = argparse.ArgumentParser(description="Calculate max flow using Ford-Fulkerson algorithm.")
+
+    # Define command line arguments
+    parser.add_argument("-f", "--filePath", required=True, help="Path to the graph input file.")
+    parser.add_argument("-s", "--source", required=True, help="Source vertex in the graph.")
+    parser.add_argument("-t", "--sink", required=True, help="Sink vertex in the graph.")
+    parser.add_argument("-g", "--graphType", type=int, choices=[1, 2, 3, 4], required=True, help="Type of graph: 1-Bipartite, 2-Fixed Degree, 3-Mesh, 4-Random.")
 
     args = parser.parse_args()
 
-    # Create the graph and load data from the specified file
+    # Create a graph instance
     G = SimpleGraph()
-    GraphInput.load_simple_graph(G, args.file_path)
 
+    # Parse the graph based on the input file
+    parseGraph(G, args.filePath)
+    startTime = time.time()
     # Calculate the maximum flow
-    max_flow = ford_fulkerson(G, args.source, args.sink)
-    print("Max flow:", max_flow)
+    maxFlow = fordFulkerson(G, args.source, args.sink)
+    print("Maximum Flow:", maxFlow)
 
+    # Optional: Calculate graph density for random graphs
+    if args.graphType == 4:
+        calculateGraphDensity(G)
+    endTime = time.time()
+    print(f"Execution Time: {endTime - startTime} seconds")
 if __name__ == "__main__":
     main()
