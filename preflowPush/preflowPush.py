@@ -1,5 +1,6 @@
+import sys
 from SimpleGraph import Edge, Vertex
-import os
+import os, time
 
 # Implementation of the preflow-push algorithm for the maximum flow problem
 # Vertex class inherited from given Vertex with height and excess attributes
@@ -142,7 +143,7 @@ class PreflowPushGraph():
         # set source node name 's'
         sourceName = self.source.name
         # saturate all edges out from source
-        for v in self.source.adjecent_vertices:
+        for v in self.source.adjacent_vertices:
             # flow from source to v is equal to capacity
             self.edges[(sourceName, v)].flow = self.edges[(sourceName, v)].capacity 
             # create backward edge as negative flow from v to source
@@ -181,27 +182,11 @@ class PreflowPushGraph():
 
 # Test cases
 if __name__ == "__main__":
+    test_graph_name: str = sys.argv[-1]
+    start = time.time()
     graph = PreflowPushGraph()
-    graph.load_simple_graph("../graphGenerationCode/Bipartite/g1.txt")
-    print(graph.preflow_push() == 150)
-    graph2 = PreflowPushGraph()
-    graph2.load_simple_graph("../graphGenerationCode/FixedDegree/20v-3out-4min-355max.txt") 
-    print(graph2.preflow_push() == 368)
-    graph = PreflowPushGraph()
-    graph.load_simple_graph("../graphGenerationCode/Bipartite/g2.txt")
-    print(graph.preflow_push() == 898)
-    graph = PreflowPushGraph()
-    graph.load_simple_graph("../graphGenerationCode/FixedDegree/100v-5out-25min-200max.txt")
-    print(graph.preflow_push() == 517)
-    graph = PreflowPushGraph()
-    graph.load_simple_graph("../graphGenerationCode/Random/n10-m10-cmin5-cmax10-f30.txt")
-    print(graph.preflow_push() == 25)
-    graph = PreflowPushGraph()
-    graph.load_simple_graph("../graphGenerationCode/Random/n100-m100-cmin10-cmax20-f949.txt")
-    print(graph.preflow_push() == 949)
-    graph = PreflowPushGraph()
-    graph.load_simple_graph("../graphGenerationCode/Mesh/smallMesh.txt")
-    print(graph.preflow_push() == 6)
-    graph = PreflowPushGraph()
-    graph.load_simple_graph("../graphGenerationCode/Mesh/MediumMesh.txt")
-    print(graph.preflow_push() == 39)
+    graph.load_simple_graph(test_graph_name)
+    max_flow = graph.preflow_push()
+    end = time.time()
+    print(f"Maximum flow: {max_flow} in {end-start} seconds")
+    del graph
