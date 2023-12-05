@@ -2,7 +2,8 @@ from edge import Edge
 from vertex import Vertex
 from simple_graph import SimpleGraph
 from graph_input import GraphInput
-import math
+import math, os, time
+
 
 '''Returns true if there is a path from source 's' to sink 't' in
 residual graph. Also fills parent[] to store the path '''
@@ -48,6 +49,7 @@ def scaling_ff(graph: SimpleGraph, source: Vertex, sink: Vertex) -> int:
     parent = {}
 
     max_flow = 0 # There is no flow initially
+
     delta = 2 ** math.floor(math.log(graph.max_capacity, 2))
 
     while (delta >= 1):
@@ -87,12 +89,37 @@ def scaling_ff(graph: SimpleGraph, source: Vertex, sink: Vertex) -> int:
 
         delta = delta / 2
 
-
     return max_flow
 
 
+if __name__ == "__main__":
 
-G = SimpleGraph()
-GraphInput.load_simple_graph(G, './graphGenerationCode/FixedDegree/100v-5out-25min-200max.txt')
+    G = SimpleGraph()
 
-print ("The maximum possible flow is %d " % scaling_ff(G, G.source, G.sink))
+    # Ask the user for the folder path
+    folder_path = input("Enter the folder path: ")
+
+    runtime_results = []
+    flow_results = []
+
+    # Check if the folder exists
+    if os.path.exists(folder_path) and os.path.isdir(folder_path):
+        # Iterate through the files in the folder
+        for filename in os.listdir(folder_path):
+            file_path = os.path.join(folder_path, filename)
+            
+            GraphInput.load_simple_graph(G, file_path)
+            # Measure the execution time of the function
+            start_time = time.time()
+            flow = scaling_ff(G, G.source, G.sink)
+            end_time = time.time()
+            # Calculate and print the elapsed time
+            elapsed_time = end_time - start_time
+            flow_results.append(flow)
+            runtime_results.append(elapsed_time)
+            print(elapsed_time)
+    else:
+        print(f"Folder '{folder_path}' does not exist.")
+
+    print(flow_results)
+    print(runtime_results)
