@@ -2,6 +2,8 @@
 from SimpleGraph import SimpleGraph
 from GraphInput import GraphInput
 import argparse
+import time
+from memory_profiler import profile
 
 def findAugmentingPath(graph, source, sink, path=[], visited=None):
     """
@@ -31,6 +33,7 @@ def findAugmentingPath(graph, source, sink, path=[], visited=None):
     # No augmenting path found
     return None
 
+@profile
 def fordFulkerson(graph, source, sink):
     """
     Implement the Ford-Fulkerson algorithm to find the maximum flow.
@@ -96,7 +99,7 @@ def main():
 
     # Parse the graph based on the input file
     parseGraph(G, args.filePath)
-
+    startTime = time.time()
     # Calculate the maximum flow
     maxFlow = fordFulkerson(G, args.source, args.sink)
     print("Maximum Flow:", maxFlow)
@@ -104,6 +107,7 @@ def main():
     # Optional: Calculate graph density for random graphs
     if args.graphType == 4:
         calculateGraphDensity(G)
-
+    endTime = time.time()
+    print(f"Execution Time: {endTime - startTime} seconds")
 if __name__ == "__main__":
     main()
