@@ -2,12 +2,12 @@ import java.io.*;
 
 public class BipartiteGraph {
     public static void main(String[] args) throws Exception {
-        int n, maxCapacity, minCapacity = 1;
+        int m, maxCapacity, minCapacity = 1;
         double maxProbability = 0.4;
 
-        for (n = 1; n <= 100; n++) {
-            int m = n;  // Number of nodes at end equals number of nodes at start
-            maxCapacity = 2 * n;
+        for (m = 1; m <= 101; m+=10) {
+            int n = 50;  // Number of nodes at end equals number of nodes at start
+            maxCapacity = 10;
 
             // Construct file name
             String fileName = "bi-" + n + "-" + m + "-" + maxProbability + "-" + minCapacity + "-" + maxCapacity + ".txt";
@@ -20,12 +20,19 @@ public class BipartiteGraph {
     // Method for graph generation and file writing
     private static void generateAndWriteGraph(int n, int m, double maxProbability, int minCapacity, int maxCapacity, String fileName) throws IOException {
         String directory = System.getProperty("user.dir");
-        PrintWriter outFile = new PrintWriter(new FileWriter(new File(directory, fileName)));
+        // Append the subdirectory 'bi-m\' to the directory path
+        File subDirectory = new File(directory, "bi-m");
+        if (!subDirectory.exists()) {
+            subDirectory.mkdirs();  // Create the subdirectory if it does not exist
+        }
+
+        File file = new File(subDirectory, fileName);
+        PrintWriter outFile = new PrintWriter(new FileWriter(file));
 
         double[][] edge = new double[n][m];
         double value, x;
         System.out.println("\n\n---------------------------------------------------");
-        System.out.println("Creating file: " + fileName);
+        System.out.println("Creating file: " + file.getPath());
         System.out.println("---------------------------------------------------\n");
 
         // Generating the graph
