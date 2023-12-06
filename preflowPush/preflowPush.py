@@ -183,9 +183,10 @@ class PreflowPushGraph():
 # Test cases
 if __name__ == "__main__":
     test_graph_name: str = sys.argv[-1]
-    start = time.time()
+    
     graph = PreflowPushGraph()
     graph.load_simple_graph(test_graph_name)
+    start = time.time()
     max_flow = graph.preflow_push()
     end = time.time()
     print(f"Maximum flow: {max_flow} in {end-start} seconds")
