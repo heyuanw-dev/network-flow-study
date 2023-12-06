@@ -16,6 +16,7 @@ class Edge:
         self.capacity = capacity
         self.flow = 0
         self.name = name
+        self.backEdge = None  # New attribute for the back edge
 
     @property
     def residualCapacity(self):
@@ -23,3 +24,6 @@ class Edge:
 
     def augmentFlow(self, additionalFlow):
         self.flow += additionalFlow
+        # Update the flow of the back edge
+        if self.backEdge:
+            self.backEdge.flow -= additionalFlow

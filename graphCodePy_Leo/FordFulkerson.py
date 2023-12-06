@@ -3,7 +3,7 @@ from SimpleGraph import SimpleGraph
 from GraphInput import GraphInput
 import argparse
 import time
-from memory_profiler import profile
+#from memory_profiler import profile
 
 def findAugmentingPath(graph, source, sink, path=[], visited=None):
     """
@@ -33,7 +33,7 @@ def findAugmentingPath(graph, source, sink, path=[], visited=None):
     # No augmenting path found
     return None
 
-@profile
+#@profile
 def fordFulkerson(graph, source, sink):
     """
     Implement the Ford-Fulkerson algorithm to find the maximum flow.

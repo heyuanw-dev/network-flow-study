@@ -12,8 +12,18 @@ class SimpleGraph:
         return self.vertices[name]
 
     def insertEdge(self, v1: Vertex, v2: Vertex, capacity, name=None):
-        edge = Edge(v1, v2, capacity, name)
-        self.edges.append(edge)
+            # Forward edge
+            forwardEdge = Edge(v1, v2, capacity, name)
+            # Backward edge with zero initial capacity
+            backwardEdge = Edge(v2, v1, 0, name)
+
+            # Linking each edge to its back edge
+            forwardEdge.backEdge = backwardEdge
+            backwardEdge.backEdge = forwardEdge
+
+            # Add both edges to the graph
+            self.edges.append(forwardEdge)
+            self.edges.append(backwardEdge)
 
     def findEdge(self, v1, v2):
         for edge in self.edges:
@@ -24,7 +34,7 @@ class SimpleGraph:
         return None
 
     def getAdjacentEdges(self, vertex: Vertex):
-        return [edge for edge in self.edges if edge.v1 == vertex or edge.v2 == vertex]
+        return [edge for edge in self.edges if edge.v1 == vertex]
 
     def numVertices(self):
         return len(self.vertices)

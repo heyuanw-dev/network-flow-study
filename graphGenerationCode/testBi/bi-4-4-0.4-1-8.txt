@@ -1,0 +1,13 @@
+s	l1	3
+s	l2	1
+s	l3	1
+s	l4	2
+l1	r2	3
+l1	r3	3
+l2	r1	2
+l2	r4	1
+l4	r4	3
+r1	t	4
+r2	t	6
+r3	t	7
+r4	t	2
