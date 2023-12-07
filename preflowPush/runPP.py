@@ -2,10 +2,7 @@ import os
 import time
 import pandas as pd
 from preflowPush import PreflowPushGraph
-
-# Assuming PreflowPushGraph and necessary classes are defined above this code
-
-# Function to run preflow push algorithm on a given graph file
+# For generating visualization only.
 def run_preflow_push(filePath):
     graph = PreflowPushGraph()
     graph.load_simple_graph(filePath)

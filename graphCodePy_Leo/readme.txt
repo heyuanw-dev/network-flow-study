@@ -25,3 +25,6 @@ python .\FordFulkerson.py -f .\tests\mediumMesh.txt -s s -t t -g 3
 Random:
 python .\FordFulkerson.py -f .\tests\n10-m10-cmin5-cmax10-f30.txt -s s -t t -g 4
 python .\FordFulkerson.py -f .\tests\n100-m100-cmin10-cmax20-f949.txt -s s -t t -g 4
+
+
+For runFordFulkerson.py, its just for visualizing and report use.

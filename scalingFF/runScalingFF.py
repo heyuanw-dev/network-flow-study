@@ -4,6 +4,8 @@ import time
 from scaling_max_flow import scaling_ff
 from simple_graph import SimpleGraph
 from graph_input import GraphInput
+
+# Generating Visualization use only.
 directory = '../graphGenerationCode/testBi/bi-c/'
 temp_results_df = pd.DataFrame(columns=['SFF-runtime', 'SFF-maxflow'])
 
