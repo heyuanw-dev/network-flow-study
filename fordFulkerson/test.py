@@ -4,7 +4,7 @@ from GraphInput import GraphInput
 from FordFulkerson import ford_fulkerson
 # Create the graph and load data
 G = SimpleGraph()
-GraphInput.load_simple_graph(G, './graphCodePy_Leo/graph_data.txt')
+GraphInput.load_simple_graph(G, './fordFulkerson/graph_data.txt')
 
 # Calculate the maximum flow
 max_flow = ford_fulkerson(G, 'S', 'T')

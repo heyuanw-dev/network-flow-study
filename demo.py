@@ -37,7 +37,7 @@ show_device_info()
 
 # Paths to the Python scripts
 script_paths = [
-    "graphCodePy_Leo/runFordFulkerson.py",
+    "fordFulkerson/runFordFulkerson.py",
     "scalingFF/runScalingFF.py",
     "preflowPush/runPP.py"
 ]
