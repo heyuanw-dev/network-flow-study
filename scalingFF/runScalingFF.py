@@ -6,7 +6,7 @@ from simple_graph import SimpleGraph
 from graph_input import GraphInput
 
 # Generating Visualization use only.
-directory = '../graphGenerationCode/testBi/bi-c/'
+directory = '../graphGenerationCode/testBi/bi-demo/'
 temp_results_df = pd.DataFrame(columns=['SFF-runtime', 'SFF-maxflow'])
 
 # Check if the directory exists
@@ -21,13 +21,13 @@ if os.path.exists(directory) and os.path.isdir(directory):
             max_flow = scaling_ff(G, G.source, G.sink)
             end_time = time.time()
             runtime = end_time - start_time
-            int_txt_part = filename.split('-')[5]
-            startingNode = int(int_txt_part.split('.')[0])
-            # startingNode = int(filename.split('-')[5])
+            # int_txt_part = filename.split('-')[5]
+            # startingNode = int(int_txt_part.split('.')[0])
+            startingNode = int(filename.split('-')[1])
             temp_results_df.loc[startingNode] = [runtime, max_flow]
 
 # Convert index to integer and sort the temporary DataFrame
 temp_results_df.index = temp_results_df.index.astype(int)
 temp_results_df.sort_index(inplace=True)
-
-temp_results_df.to_csv('../csvs/scaling-c.csv')
+print(temp_results_df)
+temp_results_df.to_csv('../csvs/scaling-t.csv')
