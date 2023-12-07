@@ -17,7 +17,7 @@ def runFordFulkerson(filePath):
     return endTime - startTime, maxFlow
 
 # List all files in the directory
-directory = '../graphGenerationCode/testBi/bi-m/'
+directory = '../graphGenerationCode/testBi/bi-c/'
 files = os.listdir(directory)
 
 # DataFrame to store results
@@ -27,11 +27,12 @@ results_df = pd.DataFrame(columns=['FF-runtime', 'FF-maxflow'])
 for file in files:
     if file.endswith('.txt'):
         filePath = os.path.join(directory, file)
-        startingNode = file.split('-')[1]  # Extract starting node number from the file name
+        int_txt_part = file.split('-')[5]
+        startingNode = int_txt_part.split('.')[0]  # Extract starting node number from the file name
         print(startingNode)
         runtime, maxflow = runFordFulkerson(filePath)
         results_df.loc[startingNode] = [runtime, maxflow]  # Use starting node as row ID
 
 # Display the results
 print(results_df)
-results_df.to_csv('../csvs/ff-bipartite-m.csv')
+results_df.to_csv('../csvs/ff-bipartite-c.csv')

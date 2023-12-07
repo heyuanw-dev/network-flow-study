@@ -2,12 +2,15 @@ import java.io.*;
 
 public class BipartiteGraph {
     public static void main(String[] args) throws Exception {
-        int m, maxCapacity, minCapacity = 1;
+        int maxCapacity, minCapacity = 1;
+        int n, m = 50;
         double maxProbability = 0.4;
 
-        for (m = 1; m <= 101; m+=10) {
-            int n = 50;  // Number of nodes at end equals number of nodes at start
-            maxCapacity = 10;
+        for (maxCapacity = 1; maxCapacity <= 101; maxCapacity+=10) {
+            // int n = 50;  // Number of nodes at end equals number of nodes at start
+ 
+            n = 50;
+            m = 50;
 
             // Construct file name
             String fileName = "bi-" + n + "-" + m + "-" + maxProbability + "-" + minCapacity + "-" + maxCapacity + ".txt";
@@ -21,7 +24,7 @@ public class BipartiteGraph {
     private static void generateAndWriteGraph(int n, int m, double maxProbability, int minCapacity, int maxCapacity, String fileName) throws IOException {
         String directory = System.getProperty("user.dir");
         // Append the subdirectory 'bi-m\' to the directory path
-        File subDirectory = new File(directory, "bi-m");
+        File subDirectory = new File(directory, "bi-c");
         if (!subDirectory.exists()) {
             subDirectory.mkdirs();  // Create the subdirectory if it does not exist
         }
