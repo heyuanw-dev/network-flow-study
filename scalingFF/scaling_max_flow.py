@@ -2,7 +2,7 @@ from edge import Edge
 from vertex import Vertex
 from simple_graph import SimpleGraph
 from graph_input import GraphInput
-import math, os, time
+import math, sys, time
 
 
 '''Returns true if there is a path from source 's' to sink 't' in
@@ -94,37 +94,16 @@ def scaling_ff(graph: SimpleGraph, source: Vertex, sink: Vertex) -> int:
 
 if __name__ == "__main__":
 
+    file_path = sys.argv[1]
     G = SimpleGraph()
 
-    # Ask the user for the folder path
-    folder_path = input("Enter the folder path: ")
+    GraphInput.load_simple_graph(G, file_path)
+    # Measure the execution time of the function
+    start_time = time.time()
+    max_flow = scaling_ff(G, G.source, G.sink)
+    end_time = time.time()
+    # Calculate and print the elapsed time
+    elapsed_time = end_time - start_time
 
-    runtime_results = {}
-    flow_results = {}
-
-    # Check if the folder exists
-    if os.path.exists(folder_path) and os.path.isdir(folder_path):
-        # Iterate through the files in the folder
-        for filename in sorted(os.listdir(folder_path)):
-            file_extension = os.path.splitext(filename)[1]
-
-            if file_extension.lower() == ".txt":
-                file_path = os.path.join(folder_path, filename)
-                
-                GraphInput.load_simple_graph(G, file_path)
-                # Measure the execution time of the function
-                start_time = time.time()
-                flow = scaling_ff(G, G.source, G.sink)
-                end_time = time.time()
-                # Calculate and print the elapsed time
-                elapsed_time = end_time - start_time
-                runtime_results[filename] = elapsed_time
-                flow_results[filename] = flow
-    else:
-        print(f"Folder '{folder_path}' does not exist.")
-
-    print("MAX FLOW of each graph:\n")
-    print(flow_results)
-    print("\n============================================================\n")
-    print("RUNTIME of each graph:\n")
-    print(runtime_results)
+    print(f"Maximum flow: {max_flow} in {elapsed_time} seconds")
+    del G
