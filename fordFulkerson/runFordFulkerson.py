@@ -5,8 +5,13 @@ from SimpleGraph import SimpleGraph
 from GraphInput import GraphInput
 from FordFulkerson import fordFulkerson, parseGraph
 import argparse
-import time
-# File for executing ford fulkerson's algorithm for all the files in a directory, and output as a csv dataset with runtime & maxflow.
+
+# Parse command line arguments for input and output directories
+parser = argparse.ArgumentParser()
+parser.add_argument('input_dir', help='Input directory containing graph files.')
+parser.add_argument('output_dir', help='Output directory for CSV file.')
+args = parser.parse_args()
+
 def runFordFulkerson(filePath):
     G = SimpleGraph()
     parseGraph(G, filePath)
@@ -16,26 +21,22 @@ def runFordFulkerson(filePath):
 
     return endTime - startTime, maxFlow
 
-# List all files in the directory
-directory = '../bi-data/bi-demo/'
-files = os.listdir(directory)
+# List all files in the input directory
+files = os.listdir(args.input_dir)
 
 # DataFrame to store results
-results_df = pd.DataFrame(columns=['FF-runtime', 'FF-maxflow'])
+results_df = pd.DataFrame(columns=['Filename', 'FF-runtime', 'FF-maxflow'])
 
 # Iterate through files and run Ford-Fulkerson
-for file in files:
+index = 0
+for file in sorted(os.listdir(args.input_dir)):
     if file.endswith('.txt'):
-        filePath = os.path.join(directory, file)
-        # Extract the first snippet after parsing with '-'. This is for generating index keys for datasets, adjust based on your choice.
-        # int_txt_part = file.split('-')[5]
-        # startingNode = int_txt_part.split('.')[0]  
-        startingNode = file.split('-')[1]
-
+        filePath = os.path.join(args.input_dir, file)
         runtime, maxflow = runFordFulkerson(filePath)
-        results_df.loc[startingNode] = [runtime, maxflow]  # Use starting node as row ID
+        results_df.loc[index] = [file, runtime, maxflow]
+        index += 1
 
-# Display the results
-print(results_df)
-# Output result to directory. 
-results_df.to_csv('../csvs/ff-bipartite-t.csv')
+
+# print(results_df)
+# Output result to output directory
+results_df.to_csv(os.path.join(args.output_dir, 'ff-bipartite-t.csv'))
