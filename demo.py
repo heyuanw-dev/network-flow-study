@@ -66,7 +66,7 @@ for script in script_paths:
     print('Complete executing: ', script)
 
 # Paths to the CSV files
-csv_paths = [os.path.join(args.output_dir, csv) for csv in ["ff-bipartite-t.csv", "preflowdf-t.csv", "scaling-t.csv"]]
+csv_paths = [os.path.join(args.output_dir, csv) for csv in ["ford-fulkerson.csv", "preflow-push.csv", "scaling-ff.csv"]]
 
 # Read and merge the CSV files...
 # Read and merge the CSV files. This is for displaying three algorithms' result in terminal. you can use merged_df.to_csv to output the dataset.

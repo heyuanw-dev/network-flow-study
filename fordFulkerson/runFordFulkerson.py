@@ -39,4 +39,4 @@ for file in sorted(os.listdir(args.input_dir)):
 
 # print(results_df)
 # Output result to output directory
-results_df.to_csv(os.path.join(args.output_dir, 'ff-bipartite-t.csv'))
+results_df.to_csv(os.path.join(args.output_dir, 'ford-fulkerson.csv'))

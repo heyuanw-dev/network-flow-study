@@ -43,4 +43,4 @@ results_df.sort_index(inplace=True)
 # print(results_df)
 
 # Output results to the specified output directory
-results_df.to_csv(os.path.join(args.output_dir, 'scaling-t.csv'))
+results_df.to_csv(os.path.join(args.output_dir, 'scaling-ff.csv'))
