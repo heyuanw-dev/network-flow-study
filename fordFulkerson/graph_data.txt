@@ -1,7 +1,0 @@
-S A 10
-S C 10
-A B 4
-A D 8
-B T 10
-C D 9
-D T 10

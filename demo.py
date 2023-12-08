@@ -48,14 +48,14 @@ for script in script_paths:
     run_script(script)
     print('Complete executing: ', script)
 
-# Paths to the CSV files
+# Paths to the CSV files, need to change if you altereed the dataset output in run(algo).py
 csv_paths = [
     "csvs/ff-bipartite-t.csv",
     "csvs/preflowdf-t.csv",
     "csvs/scaling-t.csv"
 ]
 
-# Read and merge the CSV files
+# Read and merge the CSV files. This is for displaying three algorithms' result in terminal. you can use merged_df.to_csv to output the dataset.
 dfs = [pd.read_csv(csv) for csv in csv_paths]
 merged_df = pd.concat(dfs, axis=1, join='inner')
 merged_df = merged_df.loc[:, ~merged_df.columns.str.contains('^Unnamed')]

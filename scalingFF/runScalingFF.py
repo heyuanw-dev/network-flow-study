@@ -6,7 +6,7 @@ from simple_graph import SimpleGraph
 from graph_input import GraphInput
 
 # Generating Visualization use only.
-directory = '../graphGenerationCode/testBi/bi-demo/'
+directory = '../bi-data/bi-demo/'
 temp_results_df = pd.DataFrame(columns=['SFF-runtime', 'SFF-maxflow'])
 
 # Check if the directory exists

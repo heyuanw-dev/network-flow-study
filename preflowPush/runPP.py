@@ -12,7 +12,7 @@ def run_preflow_push(filePath):
     return end_time - start_time, max_flow
 
 # Directory to search for graph files
-directory = '../graphGenerationCode/testBi/bi-demo/'
+directory = '../bi-data/bi-demo/'
 pp_results_df = pd.DataFrame(columns=['PP-runtime', 'PP-maxflow'])
 
 # Iterate through files and run Preflow Push

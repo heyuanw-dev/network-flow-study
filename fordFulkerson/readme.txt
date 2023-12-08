@@ -1,4 +1,4 @@
-Structure for input:
+Structure for input in FordFulkerson.py:
 
 python FordFulkerson.py -f (file path) -s (starting node) -t (ending node) -g (graph type)
 
@@ -27,4 +27,4 @@ python .\FordFulkerson.py -f .\tests\n10-m10-cmin5-cmax10-f30.txt -s s -t t -g 4
 python .\FordFulkerson.py -f .\tests\n100-m100-cmin10-cmax20-f949.txt -s s -t t -g 4
 
 
-For runFordFulkerson.py, its just for visualizing and report use.
+For runFordFulkerson.py, its just for visualizing and report use. Adjust the parameter for proper use following comments.

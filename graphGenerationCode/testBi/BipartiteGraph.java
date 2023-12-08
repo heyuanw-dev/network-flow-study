@@ -2,6 +2,7 @@ import java.io.*;
 
 public class BipartiteGraph {
     public static void main(String[] args) throws Exception {
+        // Change variables wish to test in the for loop, and set the rest as hard coded values.
         int maxCapacity, minCapacity = 1;
         int n, m = 50;
         double maxProbability = 0.4;
